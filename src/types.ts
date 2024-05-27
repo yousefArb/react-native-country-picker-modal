@@ -321,7 +321,6 @@ export const TranslationLanguageCodeList = [
   'svk',
   'fin',
   'zho',
-  'isr',
 ] as const
 export type TranslationLanguageCode =
   (typeof TranslationLanguageCodeList)[number]

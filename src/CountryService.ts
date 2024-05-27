@@ -26,33 +26,33 @@ const localData: DataCountry = {
 
 export const loadDataAsync = (
   (data: DataCountry) =>
-  (dataType: FlagType = FlagType.EMOJI): Promise<CountryMap> => {
-    return new Promise((resolve, reject) => {
-      switch (dataType) {
-        case FlagType.FLAT:
-          if (!data.imageCountries) {
-            fetch(imageJsonUrl)
-              .then((response: Response) => response.json())
-              .then((remoteData: any) => {
-                data.imageCountries = remoteData
-                resolve(data.imageCountries!)
-              })
-              .catch(reject)
-          } else {
-            resolve(data.imageCountries)
-          }
-          break
-        default:
-          if (!data.emojiCountries) {
-            data.emojiCountries = require('./assets/data/countries-emoji.json')
-            resolve(data.emojiCountries!)
-          } else {
-            resolve(data.emojiCountries)
-          }
-          break
-      }
-    })
-  }
+    (dataType: FlagType = FlagType.EMOJI): Promise<CountryMap> => {
+      return new Promise((resolve, reject) => {
+        switch (dataType) {
+          case FlagType.FLAT:
+            if (!data.imageCountries) {
+              fetch(imageJsonUrl)
+                .then((response: Response) => response.json())
+                .then((remoteData: any) => {
+                  data.imageCountries = remoteData
+                  resolve(data.imageCountries!)
+                })
+                .catch(reject)
+            } else {
+              resolve(data.imageCountries)
+            }
+            break
+          default:
+            if (!data.emojiCountries) {
+              data.emojiCountries = require('./assets/data/countries-emoji.json')
+              resolve(data.emojiCountries!)
+            } else {
+              resolve(data.emojiCountries)
+            }
+            break
+        }
+      })
+    }
 )(localData)
 
 export const getEmojiFlagAsync = async (countryCode: CountryCode = 'FR') => {
@@ -103,8 +103,8 @@ export const getCountryCurrencyAsync = async (countryCode: CountryCode) => {
 
 const isCountryPresent =
   (countries: { [key in CountryCode]: Country }) =>
-  (countryCode: CountryCode) =>
-    !!countries[countryCode]
+    (countryCode: CountryCode) =>
+      !!countries[countryCode]
 
 const isRegion = (region?: Region) => (country: Country) =>
   region ? country.region === region : true
@@ -150,7 +150,7 @@ export const getCountriesAsync = async (
           ...countriesRaw[cca2],
           name:
             (countriesRaw[cca2].name as TranslationLanguageCodeMap)[
-              translation
+            translation
             ] ||
             (countriesRaw[cca2].name as TranslationLanguageCodeMap)['common'],
         },
@@ -169,7 +169,7 @@ export const getCountriesAsync = async (
           ...countriesRaw[cca2],
           name:
             (countriesRaw[cca2].name as TranslationLanguageCodeMap)[
-              translation
+            translation
             ] ||
             (countriesRaw[cca2].name as TranslationLanguageCodeMap)['common'],
         },
@@ -210,7 +210,7 @@ export const search = (
   }
   if (filter && filter !== '') {
     const result = fuse.search(filter)
-    return result
+    return result.map((item: any) => item.item);
   } else {
     return data
   }
